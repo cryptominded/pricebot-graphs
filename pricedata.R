@@ -4,8 +4,7 @@ function() {
    
    function(fsym="BTC", tsym="USD", period="1day") {
       histpars<-switch(period,
-                       "1day"=c(hists="histominute", limit=1440)
-      )
+                       "1day"=c(hists="histominute", limit=1440))
       data <- url %>% 
          paste0(., histpars["hists"]) %>%
          param_set(., key="fsym", value=fsym) %>%
