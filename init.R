@@ -10,7 +10,7 @@ setwd(wd)
 
 print(list.files(path=wd, pattern="*.R$", recursive=T))
 
-r <- plumb("api.R", wd)  
+r <- plumb(dir=wd)  
 
 rm(wd)
 
