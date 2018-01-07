@@ -16,6 +16,6 @@ print(list.files(path=wd, pattern="*.R$", recursive=T))
 rm(wd)
 
 
-r <- plumb("api.R")  
+r <- plumb(paste(wd, "api.R", sep="/"))  
 
 r$run(port=as.numeric(Sys.getenv("PORT", unset=3333)), swagger=TRUE)
