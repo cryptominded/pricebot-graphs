@@ -14,6 +14,8 @@ rm(wd)
 
 print(here())
 
+setwd(here())
+
 r <- plumb("api.R")  
 
 r$run(port=as.numeric(Sys.getenv("PORT", unset=3333)), swagger=TRUE)
