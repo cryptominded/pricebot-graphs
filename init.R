@@ -7,13 +7,14 @@ wd<-if(Sys.getenv("ON_HEROKU", unset=F)) {
    "~/dev/cryptominded/pricebot-graphs"
 }
 setwd(wd)
-rm(wd)
-
-setwd(here())
 
 print(list.files(path=wd, pattern="api.R$", recursive=T))
 
 print(list.files(path=wd, pattern="*.R$", recursive=T))
+
+
+rm(wd)
+
 
 r <- plumb("api.R")  
 
