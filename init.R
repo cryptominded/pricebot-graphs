@@ -1,19 +1,18 @@
+# add packages ----
 if (!require("pacman")) install.packages("pacman")
+# init.R
 pacman::p_load("plumber")
+# api.R
+pacman::p_load("curl", "jsonlite", "dplyr", "xts", "zoo", "ggplot2", "ggExtra", "tidyquant", "urltools")
 
+# start app ----
 wd<-if(Sys.getenv("ON_HEROKU", unset=F)) {
    Sys.getenv("APP_DIR", unset="/app")
 } else {
    "~/dev/cryptominded/pricebot-graphs"
 }
-print(wd)
-
 setwd(wd)
-
-list.files(wd, pattern="*.R$")
-
-r <- plumb("/app/api.R")
+r <- plumb(paste(wd,"api.R", sep="/"))
+rm(wd)
 
 r$run(port=3333, swagger=TRUE)
-
-rm(wd)

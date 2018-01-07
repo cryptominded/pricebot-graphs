@@ -1,6 +1,3 @@
-if (!require("pacman")) install.packages("pacman")
-pacman::p_load("curl", "jsonlite", "dplyr", "xts", "zoo", "ggplot2", "ggExtra", "tidyquant", "urltools")
-
 pricedata<-dget("pricedata.R")()
 
 
