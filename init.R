@@ -8,14 +8,10 @@ wd<-if(Sys.getenv("ON_HEROKU", unset=F)) {
 }
 setwd(wd)
 
-print(list.files(path=wd, pattern="api.R$", recursive=T))
-
 print(list.files(path=wd, pattern="*.R$", recursive=T))
 
+r <- plumb("api.R", wd)  
 
 rm(wd)
-
-
-r <- plumb(paste(wd, "api.R", sep="/"))  
 
 r$run(port=as.numeric(Sys.getenv("PORT", unset=3333)), swagger=TRUE)
