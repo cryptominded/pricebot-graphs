@@ -11,9 +11,9 @@ rm(wd)
 
 setwd(here())
 
-print(list.files(path=here(), pattern="api.R$", recursive=T))
+print(list.files(path=wd, pattern="api.R$", recursive=T))
 
-print(list.files(path=here(), pattern="*.R$", recursive=T))
+print(list.files(path=wd, pattern="*.R$", recursive=T))
 
 r <- plumb("api.R")  
 
