@@ -16,6 +16,10 @@ print(here())
 
 setwd(here())
 
+print(list.files(path="../", pattern="api.R$", recursive=T))
+
+print(list.files(path="../", pattern="*.R$", recursive=T))
+
 r <- plumb("api.R")  
 
 r$run(port=as.numeric(Sys.getenv("PORT", unset=3333)), swagger=TRUE)
