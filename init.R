@@ -10,10 +10,8 @@ print(wd)
 
 setwd(wd)
 
-print(list.files(path=wd, pattern="*.R$"))
-
-r <- plumb(file=paste(wd, "api.R", sep="/"))
-
-rm(wd)
+r <- plumb("api.R")
 
 r$run(port=3333, swagger=TRUE)
+
+rm(wd)
