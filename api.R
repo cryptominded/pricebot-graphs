@@ -1,4 +1,4 @@
-pricedata<-dget("pricedata.R")()
+pricedata<-dget(resource("pricedata.R"))()
 
 
 #* @apiTitle Some title
