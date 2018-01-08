@@ -1,6 +1,6 @@
 function() {
    url<-"https://min-api.cryptocompare.com/data/"
-   avg.fromOHCL <- dget(resource("priceutil.R"))()[["avg.fromOHCL"]]
+   avg.fromOHCL <- dget("priceutil.R")()[["avg.fromOHCL"]]
    
    function(fsym="BTC", tsym="USD", period="1day") {
       histpars<-switch(period,

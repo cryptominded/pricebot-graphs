@@ -1,9 +1,13 @@
-pricedata<-dget(resource("pricedata.R"))()
+# setup ----
 
+lapply(c("curl", "jsonlite", "dplyr", "xts", "zoo", "ggplot2", "ggExtra", "tidyquant", "urltools"), 
+       require,
+       character.only=T)
+
+pricedata<-dget("pricedata.R")()
 
 #* @apiTitle Some title
 #* @apiDescription Description 
-
 
 # testgraph ----
 #' Get testgraph

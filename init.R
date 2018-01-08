@@ -1,26 +1,21 @@
-# setup wd ----
-wd<-if(Sys.getenv("ON_HEROKU", unset=F)) {
-   Sys.getenv("APP_DIR", unset="/app")
-} else {
-   "~/dev/cryptominded/pricebot-graphs"
-}
-setwd(wd)
+# packages ----
 
-resource<-function(file) {
-   paste(wd, file, sep="/")
-}
-
-
-# init libs ----
-if (!require("pacman")) install.packages("pacman")
+pkgs<-list()
 # init.R
-pacman::p_load("plumber")
+pkgs$initR<-c("plumber")
 # api.R
-pacman::p_load("curl", "jsonlite", "dplyr", "xts", "zoo", "ggplot2", "ggExtra", "tidyquant", "urltools")
+pkgs$apiR<-c("curl", "jsonlite", "dplyr", "xts", "zoo", "ggplot2", "ggExtra", "tidyquant", "urltools")
 
 
-# start app ----
-r <- plumb(resource("api.R"))
-rm(wd)
+my_pkgs<-Reduce(union, pkgs)
 
-r$run(port=3333, swagger=TRUE)
+# install ----
+install_if_missing = function(p) {
+   if (p %in% rownames(installed.packages()) == FALSE) {
+    install.packages(p, dependencies = TRUE)
+  }
+  else {
+    cat(paste("Skipping already installed package:", p, "\n"))
+  }
+}
+invisible(sapply(my_pkgs, install_if_missing))
