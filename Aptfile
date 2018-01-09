@@ -1,2 +1,6 @@
 libxml2-dev
+libmariadb-client-lgpl-dev
+libpq-dev
+libssh2-1-dev
 r-cran-rjava
+man-db
