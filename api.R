@@ -1,10 +1,14 @@
 # setup ----
 
-lapply(c("curl", "jsonlite", "dplyr", "xts", "zoo", "ggplot2", "ggExtra", "tidyquant", "urltools"), 
+lapply(c("rJava", "curl", "jsonlite", "dplyr", "xts", "zoo", "ggplot2", "ggExtra", "tidyquant", "urltools"), 
        require,
        character.only=T)
 
 pricedata<-dget("pricedata.R")()
+
+.jinit()
+.jaddClassPath("/app")
+.jclassPath()
 
 #* @apiTitle Some title
 #* @apiDescription Description 
