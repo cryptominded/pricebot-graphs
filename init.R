@@ -12,7 +12,7 @@ my_pkgs<-Reduce(union, pkgs)
 # install ----
 install_if_missing = function(p) {
    if (p %in% rownames(installed.packages()) == FALSE) {
-    install.packages(p, dependencies = TRUE)
+    install.packages(p, dependencies = NA)
   }
   else {
     cat(paste("Skipping already installed package:", p, "\n"))
