@@ -8,7 +8,11 @@ lapply(c("curl", "urltools", "jsonlite", "dplyr",
 
 # setup ----
 
-if(Sys.getenv("ON_HEROKU", unset=F)) {
+if(as.logical(Sys.getenv("ON_HEROKU", unset=F)) &&
+   "rJava" %in% rownames(installed.packages())) {
+   # need to set Config Vars in Heroku:
+   # BUILD_PACK_VERSION=20180110-2010
+   # R_VERSION=3.4.3
    .jinit()
    .jaddClassPath("/app")
    .jclassPath()
@@ -110,5 +114,4 @@ graph <- function(fsym="BTC", tsym="USD", period="1day", fontscale=20) {
                    ncol=2,
                    rel_widths = c(0.764, 0.236),
                    rel_heights = c(0.618, 0.382)))
-   
 }
