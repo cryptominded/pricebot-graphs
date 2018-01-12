@@ -1,6 +1,14 @@
 # packages ----
 
-deps<-dget("deps.R")
+# setup wd ----
+wd<-if(Sys.getenv("ON_HEROKU", unset=F)) {
+   Sys.getenv("APP_DIR", unset="/app")
+} else {
+   "~/dev/cryptominded/pricebot-graphs"
+}
+deps<-dget(paste0(wd, "/deps.R"))
+
+rm(wd)
 
 my_pkgs<-Reduce(union, deps)
 
