@@ -1,18 +1,14 @@
-# packages ----
+# list packages ----
 
-# setup wd ----
-wd<-if(Sys.getenv("ON_HEROKU", unset=F)) {
-   Sys.getenv("APP_DIR", unset="/app")
-} else {
-   "~/dev/cryptominded/pricebot-graphs"
-}
-deps<-dget(paste0(wd, "/deps.R"))
-
-rm(wd)
+deps<-list(app=c("plumber"),
+           api=c("curl", "urltools", "jsonlite", "dplyr",
+                 "xts", "zoo", "tidyquant",
+                 "ggplot2", "ggExtra","grid", "cowplot"))
 
 my_pkgs<-Reduce(union, deps)
 
-# install ----
+# install new packages ----
+
 install_if_missing = function(p) {
    if (p %in% rownames(installed.packages()) == FALSE) {
     install.packages(p, dependencies = NA)
@@ -22,3 +18,5 @@ install_if_missing = function(p) {
   }
 }
 invisible(sapply(my_pkgs, install_if_missing))
+
+rm(deps, my_pkgs, install_if_missing)

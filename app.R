@@ -1,9 +1,5 @@
-
-lapply(dget("deps.R")$app, 
-       require,
-       character.only=T)
-
 # setup wd ----
+
 wd<-if(Sys.getenv("ON_HEROKU", unset=F)) {
    Sys.getenv("APP_DIR", unset="/app")
 } else {
@@ -12,6 +8,14 @@ wd<-if(Sys.getenv("ON_HEROKU", unset=F)) {
 setwd(wd)
 
 rm(wd)
+
+
+# require --
+
+lapply(c("plumber"), 
+       require,
+       character.only=T)
+
 
 # start app ----
 r <- plumb("api.R")

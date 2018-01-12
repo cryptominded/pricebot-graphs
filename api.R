@@ -1,8 +1,12 @@
-# setup ----
+# require --
 
-lapply(dget("deps.R")$api, 
+lapply(c("curl", "urltools", "jsonlite", "dplyr",
+         "xts", "zoo", "tidyquant",
+         "ggplot2", "ggExtra","grid", "cowplot"), 
        require,
        character.only=T)
+
+# setup ----
 
 if(Sys.getenv("ON_HEROKU", unset=F)) {
    .jinit()
