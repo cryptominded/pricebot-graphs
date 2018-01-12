@@ -1,8 +1,6 @@
 # setup ----
 
-lapply(c("rJava", "curl", "jsonlite", "dplyr", "xts", "zoo", 
-         "ggplot2", "ggExtra", "grid", "cowplot", "gridExtra", "tidyquant", 
-         "urltools"), 
+lapply(dget("deps.R")$api, 
        require,
        character.only=T)
 
@@ -56,9 +54,9 @@ graph <- function(fsym="BTC", tsym="USD", period="1day", fontscale=20) {
                     color_up="#77ff77", color_down="#ff7777") +
       labs(x="date&time",y=paste0("price (", tsym, "/1 ", fsym, ")")) +
       ggtitle(paste(fsym, tsym, period, sep=" - ")) +
-      geom_line(aes(y=predict(lw1)), colour="#33bbbb", lwd=0.618) +
-      geom_line(aes(y=predict(lw2)), colour="#dd44dd", lwd=0.618) +
-      geom_line(aes(y=predict(lw2w)), colour="#dd44dd", lwd=0.618, lty="dashed") +
+      geom_line(aes(y=predict(lw1)), colour="#dd44dd", lwd=0.618) +
+      geom_line(aes(y=predict(lw2)), colour="#33bbbb", lwd=0.618) +
+      geom_line(aes(y=predict(lw2w)), colour="#33bbbb", lwd=0.618, lty="dashed") +
       #geom_ma(aes(volume=volumefrom),
       #        ma_fun=VWMA, n=13, colour="blue", size=0.3) +
       #geom_ma(ma_fun=EMA, n=13, colour="orange", size=0.3) +
@@ -75,7 +73,7 @@ graph <- function(fsym="BTC", tsym="USD", period="1day", fontscale=20) {
  
    pvol <- ggplot(candles,aes(x=Index, y=volumeto)) + 
       geom_bar(stat="identity", width = 60*24/8, colour="#cacaca") +
-      geom_smooth(span=1/24, se=F, colour="#33bbbb") +
+      geom_smooth(span=1/24, se=F, colour="#dd44dd") +
       theme(text = element_text(size = fontscale),
             plot.margin = unit(c(0, 0, 0, 0), "cm")) +
       ylab(paste0("volume (", tsym ,")")) +
@@ -93,7 +91,7 @@ graph <- function(fsym="BTC", tsym="USD", period="1day", fontscale=20) {
    print(plot_grid(gl[[1]], 
                    ggplot(candles, aes(x=1,y=avg)) + 
                       geom_violin(aes(weight=as.numeric(weights)/sum(as.numeric(weights))),
-                                  fill="#dd44dd",
+                                  fill="#33bbbb",
                                   bw="ucv",
                                   draw_quantiles = TRUE) + 
                       geom_boxplot(aes(weight=as.numeric(weights)/sum(as.numeric(weights))),
@@ -101,7 +99,7 @@ graph <- function(fsym="BTC", tsym="USD", period="1day", fontscale=20) {
                       theme_void(), 
                    gl[[2]],
                    ggplot(candles, aes(x=1, y=volumeto)) +
-                      geom_violin(fill="#33bbbb") +
+                      geom_violin(fill="#dd44dd") +
                       theme_void(), 
                    align = "hv", 
                    nrow = 2,

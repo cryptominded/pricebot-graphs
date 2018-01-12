@@ -1,4 +1,7 @@
-library(plumber)
+
+lapply(dget("deps.R")$app, 
+       require,
+       character.only=T)
 
 # setup wd ----
 wd<-if(Sys.getenv("ON_HEROKU", unset=F)) {

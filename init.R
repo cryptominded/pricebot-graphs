@@ -1,13 +1,8 @@
 # packages ----
 
-pkgs<-list()
-# init.R
-pkgs$initR<-c("plumber")
-# api.R
-pkgs$apiR<-c("curl", "jsonlite", "dplyr", "xts", "zoo", "ggplot2", "ggExtra", "tidyquant", "urltools")
+deps<-dget("deps.R")
 
-
-my_pkgs<-Reduce(union, pkgs)
+my_pkgs<-Reduce(union, deps)
 
 # install ----
 install_if_missing = function(p) {
