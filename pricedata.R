@@ -2,8 +2,8 @@ function() {
    url<-"https://min-api.cryptocompare.com/data/"
    avg.fromOHCL <- dget("priceutil.R")()[["avg.fromOHCL"]]
    
-   function(fsym="BTC", tsym="USD", period="1day") {
-      histpars<-switch(period,
+   function(fsym="BTC", tsym="USD", p="1day") {
+      histpars<-switch(p,
                        "1day"=c(hists="histominute", limit=1440))
       data <- url %>% 
          paste0(., histpars["hists"]) %>%
