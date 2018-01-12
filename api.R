@@ -1,15 +1,14 @@
 # require --
 
 lapply(c("curl", "urltools", "jsonlite", "dplyr",
-         "xts", "zoo", "tidyquant",
+         "xts", "zoo", "rJava", "tidyquant",
          "ggplot2", "ggExtra","grid", "cowplot"), 
        require,
        character.only=T)
 
 # setup ----
 
-if(as.logical(Sys.getenv("ON_HEROKU", unset=F)) &&
-   "rJava" %in% rownames(installed.packages())) {
+if(as.logical(Sys.getenv("ON_HEROKU", unset=F))) {
    # need to set Config Vars in Heroku:
    # BUILD_PACK_VERSION=20180110-2010
    # R_VERSION=3.4.3

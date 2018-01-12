@@ -2,7 +2,7 @@
 
 deps<-list(app=c("plumber"),
            api=c("curl", "urltools", "jsonlite", "dplyr",
-                 "xts", "zoo", "tidyquant",
+                 "xts", "zoo", "rJava", "tidyquant",
                  "ggplot2", "ggExtra","grid", "cowplot"))
 
 my_pkgs<-Reduce(union, deps)
