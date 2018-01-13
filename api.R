@@ -63,6 +63,8 @@ graph <- function(fsym="BTC", tsym="USD", period="1day", fontscale=20) {
    candles<-pricedata(toupper(fsym), toupper(tsym), tolower(period))
    fontscale<-as.numeric(fontscale)
    
+   pricerange<-c(min(candles$low), max(candles$high))
+   
    lw1 <- loess(as.numeric(candles$avg) ~ as.numeric(index(candles)), span=1/12)
    lw2 <- loess(as.numeric(candles$avg) ~ as.numeric(index(candles)), span=sqrt(1/12))
    lw2w <- loess(as.numeric(candles$avg) ~ as.numeric(index(candles)),
@@ -86,6 +88,7 @@ graph <- function(fsym="BTC", tsym="USD", period="1day", fontscale=20) {
                  size=0.2,
                  linetype="longdash") +
       xlim(range(index(candles))) +
+      ylim(pricerange) +
       theme(axis.title.x = element_blank(), 
             axis.text.x = element_blank(),
             text = element_text(size = fontscale),
@@ -110,17 +113,29 @@ graph <- function(fsym="BTC", tsym="USD", period="1day", fontscale=20) {
    
    print(plot_grid(gl[[1]], 
                    ggplot(candles, aes(x=1,y=avg)) + 
+                      ggtitle("density") +
                       geom_violin(aes(weight=weights/sum(weights)),
                                   fill="#33bbbb",
                                   bw="SJ",
-                                  draw_quantiles = TRUE) + 
-                      geom_boxplot(width = 0.2) +
-                      theme_void(), 
+                                  draw_quantiles = c(0.05, 0.2, 0.382, 0.618, 0.8, 0.95),
+                                  colour="white") + 
+                      geom_boxplot(aes(weight=weights/sum(weights)),
+                                   width = 0.05) +
+                      theme(axis.title.y = element_blank(),
+                            axis.text.y = element_blank(),
+                            axis.title.x = element_blank(), 
+                            axis.text.x = element_blank(),
+                            text = element_text(size = fontscale),
+                            plot.margin = unit(c(0, 0, 0, 0), "cm")) +
+                      ylim(pricerange),
                    gl[[2]],
                    ggplot(candles, aes(x=1, y=volumeto)) +
-                      geom_violin(fill="#dd44dd") +
-                      theme_void(), 
-                   align = "hv", 
+                      geom_violin(fill="#dd44dd", colour="white") +
+                      xlab("-") +
+                      theme(axis.title.y = element_blank(),
+                            axis.text.y = element_blank(),
+                            text = element_text(size = fontscale),
+                            plot.margin = unit(c(0, 0, 0, 0), "cm")), 
                    nrow = 2,
                    ncol=2,
                    rel_widths = c(0.764, 0.236),
