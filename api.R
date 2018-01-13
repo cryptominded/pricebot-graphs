@@ -22,8 +22,10 @@ pricedata<-dget("pricedata.R")()
 findxpeaks<-dget("findxpeaks.R")
 
 
-#* @apiTitle Some title
-#* @apiDescription Description 
+#* @apiTitle CCGL - Cryptominded Crypto Graphing Library
+#* @apiDescription API for cryptocurrency price and volume graphs in cryptominded style, including 
+#* analytics and analysis.
+#* @apiVersion ★-470† -399 socrates 
 
 # testgraph ----
 #' Get testxyplot
