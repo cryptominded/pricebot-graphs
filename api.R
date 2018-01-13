@@ -100,8 +100,7 @@ graph <- function(fsym="BTC", tsym="USD", period="1day", fontscale=20) {
                                   fill="#33bbbb",
                                   bw="SJ",
                                   draw_quantiles = TRUE) + 
-                      geom_boxplot(aes(weight=weights/sum(weights)),
-                                   width = 0.2) +
+                      geom_boxplot(width = 0.2) +
                       theme_void(), 
                    gl[[2]],
                    ggplot(candles, aes(x=1, y=volumeto)) +
