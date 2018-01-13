@@ -6,19 +6,21 @@ lapply(c("curl", "urltools", "jsonlite", "dplyr",
        require,
        character.only=T)
 
+
 # setup ----
 
 if(as.logical(Sys.getenv("ON_HEROKU", unset=F))) {
    # need to set Config Vars in Heroku:
    # BUILD_PACK_VERSION=20180110-2010
    # R_VERSION=3.4.3
-   .jinit()
+   .jinit(parameters=c("-Xmx128m", "-server"))
    .jaddClassPath("/app")
    .jclassPath()
 }
 
 pricedata<-dget("pricedata.R")()
 findxpeaks<-dget("findxpeaks.R")
+
 
 #* @apiTitle Some title
 #* @apiDescription Description 
@@ -44,7 +46,7 @@ testgraph <- function() {
 #' @response 400 Some error...
 #' @response 404 I have been looking very deeply, but I can't find what you ask me
 graph <- function(fsym="BTC", tsym="USD", period="1day", fontscale=20) {
-   candles<-pricedata(fsym, tsym, period)
+   candles<-pricedata(toupper(fsym), toupper(tsym), tolower(period))
    
    lw1 <- loess(as.numeric(candles$avg) ~ as.numeric(index(candles)), span=1/12)
    lw2 <- loess(as.numeric(candles$avg) ~ as.numeric(index(candles)), span=sqrt(1/12))
@@ -73,7 +75,7 @@ graph <- function(fsym="BTC", tsym="USD", period="1day", fontscale=20) {
             text = element_text(size = fontscale),
             plot.margin = unit(c(0, 0, 0, 0), "cm")) 
    pprice <- pprice +
-      geom_hline(yintercept=findxpeaks(candles$avg, weights, 4),
+      geom_hline(yintercept=findxpeaks(candles$avg, weights, bw="bcv"),
                  colour="darkcyan",
                  size=0.2,
                  linetype="longdash")
@@ -97,9 +99,9 @@ graph <- function(fsym="BTC", tsym="USD", period="1day", fontscale=20) {
    
    print(plot_grid(gl[[1]], 
                    ggplot(candles, aes(x=1,y=avg)) + 
-                      geom_violin(aes(weight=as.numeric(weights)/sum(as.numeric(weights))),
+                      geom_violin(aes(weight=weights/sum(weights)),
                                   fill="#33bbbb",
-                                  bw="ucv",
+                                  bw="bcv",
                                   draw_quantiles = TRUE) + 
                       geom_boxplot(aes(weight=as.numeric(weights)/sum(as.numeric(weights))),
                                    width = 0.2) +

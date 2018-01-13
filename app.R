@@ -1,3 +1,10 @@
+# require --
+
+lapply(c("plumber"), 
+       require,
+       character.only=T)
+
+
 # setup wd ----
 
 wd<-if(Sys.getenv("ON_HEROKU", unset=F)) {
@@ -8,13 +15,6 @@ wd<-if(Sys.getenv("ON_HEROKU", unset=F)) {
 setwd(wd)
 
 rm(wd)
-
-
-# require --
-
-lapply(c("plumber"), 
-       require,
-       character.only=T)
 
 
 # start app ----
