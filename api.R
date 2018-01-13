@@ -26,14 +26,26 @@ findxpeaks<-dget("findxpeaks.R")
 #* @apiDescription Description 
 
 # testgraph ----
-#' Get testgraph
-#' @get /testgraph
+#' Get testxyplot
+#' @get /testxyplot
 #' @png()
 #' @response 400 Some error...
 #' @response 404 I have been looking very deeply, but I can't find what you ask me
-testgraph <- function() {
+function() {
    plot(1:10, (1:10)^2)
 }
+
+# testgraph ----
+#' Get testboxplot
+#' @get /testboxplot
+#' @png()
+#' @response 400 Some error...
+#' @response 404 I have been looking very deeply, but I can't find what you ask me
+function() {
+   print(ggplot(diamonds, aes(carat, price)) +
+      geom_boxplot(aes(group = cut_width(carat, 0.25))))
+}
+
 
 # graph ----
 #' Get graph
