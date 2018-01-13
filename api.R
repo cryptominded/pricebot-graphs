@@ -118,7 +118,7 @@ graph <- function(fsym="BTC", tsym="USD", period="1day", fontscale=20) {
                                   fill="#33bbbb",
                                   bw="SJ",
                                   draw_quantiles = c(0.05, 0.2, 0.382, 0.618, 0.8, 0.95),
-                                  colour="white") + 
+                                  colour="white", lwd=0.2) + 
                       geom_boxplot(aes(weight=weights/sum(weights)),
                                    width = 0.05) +
                       theme(axis.title.y = element_blank(),
@@ -130,7 +130,7 @@ graph <- function(fsym="BTC", tsym="USD", period="1day", fontscale=20) {
                       ylim(pricerange),
                    gl[[2]],
                    ggplot(candles, aes(x=1, y=volumeto)) +
-                      geom_violin(fill="#dd44dd", colour="white") +
+                      geom_violin(fill="#dd44dd", colour="#dd44dd", lwd=0.2) +
                       xlab("-") +
                       theme(axis.title.y = element_blank(),
                             axis.text.y = element_blank(),
