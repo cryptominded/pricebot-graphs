@@ -1,7 +1,7 @@
 # require --
 
 lapply(c("curl", "urltools", "jsonlite", "dplyr",
-         "xts", "zoo", "rJava", "tidyquant",
+         "xts", "zoo", "rJava", "tidyquant", "quantreg",
          "ggplot2", "ggExtra","grid", "cowplot"), 
        require,
        character.only=T)
@@ -25,7 +25,7 @@ findxpeaks<-dget("findxpeaks.R")
 #* @apiTitle CCGL - Cryptominded Crypto Graphing Library
 #* @apiDescription API for cryptocurrency price and volume graphs in cryptominded style, including 
 #* analytics and analysis.
-#* @apiVersion ★-470† -399 socrates 
+#* @apiVersion socrates (470BC-399BC)  
 
 # testgraph ----
 #' Get testxyplot
