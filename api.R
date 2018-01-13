@@ -47,6 +47,7 @@ testgraph <- function() {
 #' @response 404 I have been looking very deeply, but I can't find what you ask me
 graph <- function(fsym="BTC", tsym="USD", period="1day", fontscale=20) {
    candles<-pricedata(toupper(fsym), toupper(tsym), tolower(period))
+   fontscale<-as.numeric(fontscale)
    
    lw1 <- loess(as.numeric(candles$avg) ~ as.numeric(index(candles)), span=1/12)
    lw2 <- loess(as.numeric(candles$avg) ~ as.numeric(index(candles)), span=sqrt(1/12))
@@ -63,25 +64,21 @@ graph <- function(fsym="BTC", tsym="USD", period="1day", fontscale=20) {
                     color_up="#77ff77", color_down="#ff7777") +
       labs(x="date&time",y=paste0("price (", tsym, "/1 ", fsym, ")")) +
       ggtitle(paste(fsym, tsym, period, sep=" - ")) +
-      geom_line(aes(y=predict(lw1)), colour="#dd44dd", lwd=0.618) +
+      geom_line(aes(y=predict(lw1)), colour="#777777", lwd=1) +
       geom_line(aes(y=predict(lw2)), colour="#33bbbb", lwd=0.618) +
-      geom_line(aes(y=predict(lw2w)), colour="#33bbbb", lwd=0.618, lty="dashed") +
-      #geom_ma(aes(volume=volumefrom),
-      #        ma_fun=VWMA, n=13, colour="blue", size=0.3) +
-      #geom_ma(ma_fun=EMA, n=13, colour="orange", size=0.3) +
+      geom_line(aes(y=predict(lw2w)), colour="#33bbbb", lwd=0.618, lty="dashed")  +
+      geom_hline(yintercept=findxpeaks(candles$avg, weights, bw="SJ"),
+                 colour="darkcyan",
+                 size=0.2,
+                 linetype="longdash") +
       xlim(range(index(candles))) +
       theme(axis.title.x = element_blank(), 
             axis.text.x = element_blank(),
             text = element_text(size = fontscale),
             plot.margin = unit(c(0, 0, 0, 0), "cm")) 
-   pprice <- pprice +
-      geom_hline(yintercept=findxpeaks(candles$avg, weights, bw="SJ"),
-                 colour="darkcyan",
-                 size=0.2,
-                 linetype="longdash")
- 
+
    pvol <- ggplot(candles,aes(x=Index, y=volumeto)) + 
-      geom_bar(stat="identity", width = 60*24/8, colour="#cacaca") +
+      geom_bar(stat="identity", width = nrow(candles)/8, colour="#cacaca") +
       geom_smooth(span=1/24, se=F, colour="#dd44dd") +
       theme(text = element_text(size = fontscale),
             plot.margin = unit(c(0, 0, 0, 0), "cm")) +
