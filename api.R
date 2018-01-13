@@ -55,7 +55,7 @@ graph <- function(fsym="BTC", tsym="USD", period="1day", fontscale=20) {
                  span=sqrt(1/12))
    
    weights<-tanh((candles$volumeto-median(candles$volumeto))/median(candles$volumeto))
-   weights<-(weights - min(weights))
+   weights<-as.numeric(weights - min(weights))
    
    pprice <- ggplot(data=candles, aes(x=Index, y=avg)) +
       geom_point(aes(y=avg), cex=0.3, colour="#777777") +
@@ -75,7 +75,7 @@ graph <- function(fsym="BTC", tsym="USD", period="1day", fontscale=20) {
             text = element_text(size = fontscale),
             plot.margin = unit(c(0, 0, 0, 0), "cm")) 
    pprice <- pprice +
-      geom_hline(yintercept=findxpeaks(candles$avg, weights, bw="bcv"),
+      geom_hline(yintercept=findxpeaks(candles$avg, weights, bw="SJ"),
                  colour="darkcyan",
                  size=0.2,
                  linetype="longdash")
@@ -101,9 +101,9 @@ graph <- function(fsym="BTC", tsym="USD", period="1day", fontscale=20) {
                    ggplot(candles, aes(x=1,y=avg)) + 
                       geom_violin(aes(weight=weights/sum(weights)),
                                   fill="#33bbbb",
-                                  bw="bcv",
+                                  bw="SJ",
                                   draw_quantiles = TRUE) + 
-                      geom_boxplot(aes(weight=as.numeric(weights)/sum(as.numeric(weights))),
+                      geom_boxplot(aes(weight=weights/sum(weights)),
                                    width = 0.2) +
                       theme_void(), 
                    gl[[2]],
